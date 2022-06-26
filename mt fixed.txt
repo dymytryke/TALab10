@@ -1,0 +1,466 @@
+;Пройтися по лінті, розставити розділювачі
+; 0
+
+0 * * * a1
+
+; a1
+a1 0 0 r a1
+a1 1 1 r a1
+a1 _ - r a2
+
+; a2
+a2 0 0 r a2
+a2 1 1 r a2
+a2 _ & * a3
+
+; a3
+a3 _ _ r a4
+a3 * * l a3
+
+; a4
+a4 1 x r q1
+a4 - @ r q-
+a4 0 y r q0
+a4 & & l a10
+a4 * * r a4
+
+;Скопіювати цифри
+; q1
+q1 _ 1 * a3
+q1 * * r q1
+
+; q-
+q- _ # * a3
+q- * * r q-
+
+; q0
+q0 _ 0 * a3
+q0 * * r q0
+
+; a10
+a10 y 0 l a10
+a10 x 1 l a10
+a10 @ - l a10
+a10 _ _  * a5
+a10 * * l a10
+
+;Із бінарної в унарну систему
+; a5
+a5 & & r p4
+a5 * * r a5
+
+; p4
+p4 1 0 r p11
+p4 _ _ * p3
+p4 * * r p4
+
+; p11
+p11 0 I r p0
+p11 1 I r p1
+p11 # I r p#
+p11 _ I * p2
+
+; p0
+p0 0 0 r p0
+p0 1 0 r p1
+p0 # 0 r p#
+p0 _ 0 * p2
+
+; p1
+p1 1 1 r p1
+p1 # 1 r p#
+p1 _ 1 * p2
+p1 0 1 r p0
+
+; p#
+p# # # r p#
+p# 0 # r p0
+p# 1 # r p1
+p# _ # * p2
+
+; p2
+p2 & & r p4
+p2 * * l p2
+
+; p3
+p3 * * l p3
+p3 & & r b1
+
+; b1 
+b1 * * r b1
+b1 _ _ * b20
+b1 0 0 l b2
+	
+;b20
+b20 * * l b20
+b20 0 b l b20
+b20 & & * c1
+
+; b11
+b11 * * r b1
+
+;b2
+b2 * * r b11
+b2 I 0 r b3
+
+; b3
+b3 0 I r b4
+
+; b4
+b4 0 I r b0
+b4 # I r b#
+b4 I I r bb
+b4 _ I * p4
+
+; b0
+b0 0 0 r b0
+b0 I 0 r bb
+b0 _ 0 * p3
+b0 # 0 r b#
+
+; b#
+b# # # r b#
+b# _ # * p3
+b# I # r bb
+b# 0 # r b0
+
+; bb
+bb # I r b#
+bb I I r bb
+bb 0 I r b0
+bb _ I * p3
+
+;Ділення з остачею
+;c1
+c1 * * r c1
+c1 _ _ * c2
+
+;c2
+c2 * * l c2
+c2 # # r c7
+c2 I m l c3
+
+;c7
+c7 m I r c7
+c7 _ _ * c2
+c7 * * r c7
+
+;c3
+c3 * * l c3
+c3 # # l ck1
+
+;ck1
+ck1 * * l ck1
+ck1 I t r c1
+ck1 & & * c4
+
+;c4
+c4 * * r c4
+c4 m m r ck5
+
+;ck5 
+ck5 * * r ck5
+ck5 _ _ * cf1
+ck5  m m r cf2
+
+;cf1
+cf1 * _ l cf1
+cf1 & & * f1
+
+;cf2
+cf2 * * r cf2
+cf2 _ _ * cf3
+
+;cf3
+cf3 * _ l cf3
+cf3 & & * f2
+
+;Для першої функції
+; f1
+f1 * * l f1
+f1 & _ l f1
+f1 _ & * d11
+
+; d11
+d11 * * r d11
+d11 _ _ l d2
+
+; d2
+d2 * * l d2
+d2 & & * d3
+d2 1 x l d1
+d2 0 y l d0
+d2 - @ l d-
+
+; d1
+d1 * * l d1
+d1 _ 1 * d11
+
+; d0
+d0 * * l d0
+d0 _ 0 * d11
+
+; d-
+d- * * l d-
+d- _ # * d11
+
+; d3
+d3 x 1 r d3
+d3 y 0 r d3
+d3 @ - r d3
+d3 _ _ l d4
+d3 * * r d3
+
+; d4
+d4 * * l d4
+d4 & & l e11
+
+; e11
+e11 * * l e11
+e11 0 t l e0
+e11 1 t l e1
+e11 # # * e111
+
+; e111
+e111 * * l e111
+e111 _ _ r e21
+e111 1 x * e111
+e111 0 y * e111
+
+
+
+; e0
+e0 * * l e0
+e0 # # * ee0
+
+; ee0
+ee0 * * l ee0
+ee0 1 x r e10
+ee0 0 y r e10
+ee0 _ y * e10
+
+; e10
+e10 * * r e10
+e10 & & * e11
+
+; e1
+e1 * * l e1
+e1 # # l e5
+
+; e5
+e5 * * l e5
+e5 1 y l e20
+e5 0 x r e10
+e5 _ x r e10
+
+; e20
+e20 * * l e20
+e20 1 0 l e20
+e20 _ 1 r e10
+e20 0 1 r e10
+
+; e21
+e21 * * r e21
+e21 _ - * e22
+
+; e22
+e22 * * l e22
+e22 _ _ r g10
+
+; g10
+g10 * * r g10
+g10 x _ r g1
+g10 y _ r g0
+g10 # _ r g3
+
+; g1
+g1 * * r g1
+g1 _ 1 l e22
+
+; g0
+g0 * * r g0
+g0 _ 0 l e22
+
+; g3
+g3 * _ r g3
+g3 & _ r g4
+
+; g4
+g4 * * r g4
+g4 - _ r g4
+g4 & _ r g4
+g4 _ * * stop
+
+; i4
+i4 * * l i4
+i4 0 t l i0
+i4 1 t l i1
+i4 # # * i119
+
+; i0
+i0 A A l i01
+i0 * * l i0
+
+; i01
+i01 _ y r i3
+i01 1 x r i3
+i01 0 y r i3
+i01 * * l i01
+
+; i1
+i1 * * l i1
+ i1 # # l i11
+
+; i11
+i11 1 x l i111
+i11 0 y l i115
+i11 A A * i211
+i11 * * l i11
+
+;i211
+i211 * * l i211
+i211 _ _ * i213
+i211 m x l i213
+i211 I y l i213
+
+;i213
+i213 * * l i213
+i213 _ _ * i212
+
+;i212
+i212 A A r i117
+i212 * * r i212
+i212 m 1 r i212
+i212 I 0  r i212
+
+; i111
+i111 * * l i111
+i111 A A l i112
+
+; i112
+i112 _ m r i113
+i112 0 m r i113
+i112 1 I l i114
+i112 * * l i112
+
+; i113
+i113 * * r i113
+i113 # # l i11
+
+; i114
+i114 1 0 l i114
+i114 0 1 r i113
+i114 _ 1 r i113
+
+; i115
+i115 * * l i115
+i115 A A l i116
+
+; i116
+i116 * * l i116
+i116 1 m r i113
+i116 0 I r i113
+i116 _ I r i113
+
+; i117
+i117 * * r i117
+i117 x 1 r i117
+i117 y 0 r i117
+i117 # # r i118
+
+; i118
+i118 m 1 r i118
+i118 I 0 r i118
+i118 # # * i3
+i118 * * * i3
+
+
+;Для другої функції
+;f2
+f2 * * l f2
+f2 & _ l f2
+f2 _ & * h10
+
+;h10
+h10 * * r h10
+h10 _ _ l h2
+
+;h2
+h2 * * l h2
+h2 1 x l h1
+h2 0 y l h0
+h2 - @ l (h-)
+h2 & & r h3
+
+;h1
+h1 * * l h1
+h1 _ 1 * h10
+
+;h0
+h0 _ 0 * h10
+h0 * * l h0
+
+;(h-)
+(h-) _ # * h10
+(h-) * * l (h-)
+
+;h3
+h3 x 1 r h3
+h3 y 0 r h3
+h3 @ - r h3
+h3 _ _ l h4
+
+;h4
+h4 * * l h4
+h4 & & l i2
+
+;i2
+i2 * * l i2
+i2 _ A r i3
+
+;i3
+i3 * * r i3
+i3 & & * i4
+
+;i119
+i119 * * r i119
+i119 & b l i120
+
+;i120
+i120 * b l i120
+i120 A 0 l i121
+
+;i121
+i121 * * l i121
+i121 x 1 l i121
+i121 y 0 l i121
+i121 _ _ r i122
+
+
+;i122
+i122 * * r i122
+i122 _ - l i124
+
+;i124
+i124 * * l i124
+i124 _ _ * k10
+
+;k10
+k10 * * r k10
+k10 b _ r k2
+k10 1 _ r k1
+k10 0 _ r k0
+
+;k0
+k0 * * r k0
+k0 _ 0 l i124
+
+;k1
+k1 _ 1 l i124
+k1 * * r k1
+
+; k2
+k2 b _ r k2
+k2 * * r k2
+k2 - _ r k2
+k2 _ _ * stop
